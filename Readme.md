@@ -2,7 +2,7 @@
 
 Container contendo o Nginx faz o Proxy Reverso e container do NodeJs contém o servidor da aplicação
 
-Execute o comando no docker:
+Executar o projeto:
 ```
   docker-compose up -d
 ```
