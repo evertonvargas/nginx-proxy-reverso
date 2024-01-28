@@ -6,7 +6,7 @@ FROM node:alpine
 WORKDIR /usr/src/app
 
 ## Copia tudo que começa com package e termina com .json para dentro da pasta /usr/src/app
-COPY package*.json ./
+COPY package.json .
 
 ## Executa npm install para adicionar as dependências e criar a pasta node_modules
 RUN npm install
@@ -16,7 +16,10 @@ RUN npm install
 ## Vamos ignorar a node_modules por isso criaremos um .dockerignore
 COPY . .
 
-## Container ficará ouvindo os acessos na porta 3000
-EXPOSE 3000
+RUN apk add --no-cache curl
 
-CMD ["node", "index.js"]
+ENV DOCKERIZE_VERSION v0.19.0
+
+RUN curl -sfL \
+	https://github.com/powerman/dockerize/releases/download/${DOCKERIZE_VERSION}/dockerize-$(uname -s)-$(uname -m) | \
+	install /dev/stdin /usr/local/bin/dockerize
